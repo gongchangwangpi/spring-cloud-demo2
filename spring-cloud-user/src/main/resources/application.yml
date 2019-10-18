@@ -1,0 +1,22 @@
+server:
+  port: 11001
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: cloud-user
+  profiles:
+    active: peer2
+
+---
+spring:
+  profiles: peer1
+
+
+---
+spring:
+  profiles: peer2

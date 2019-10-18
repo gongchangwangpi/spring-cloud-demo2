@@ -1,0 +1,49 @@
+server:
+  port: 12000
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: cloud-gateway
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://172.16.2.182:3306/saas_auth?useUnicode=true&characterEncoding=UTF-8
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedHeaders: "*"
+            allowedOrigins: "*"
+            allowCredentials: "true"
+            allowedMethods:
+              - OPTIONS
+              - GET
+              - PUT
+              - DELETE
+              - POST
+      routes:
+        - id: user
+          uri: lb://cloud-user
+          predicates:
+            - Path=/api/users/**
+        - id: user-websocket
+          uri: lb://cloud-user
+          predicates:
+            - Path=/api/users/websocket/**
+        - id: user-tomcat-websocket
+          uri: lb://cloud-user
+          predicates:
+            - Path=/api/users/tomcat_websocket/**
+
+mybatis-plus:
+  mapper-locations: classpath*:/mappers/*.xml
+  global-config:
+    db-config:
+      id-type: auto
