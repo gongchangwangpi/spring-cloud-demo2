@@ -29,16 +29,6 @@ public class GlobalFilterConfig {
     @Bean
     @Order(-1)
     public GlobalFilter loginUser() {
-//            return (exchange, chain) -> exchange.getPrincipal()
-//                    .map(Principal::getName)
-//                    .defaultIfEmpty("Default User")
-//                    .map(userName -> {
-//                        //adds header to proxied request
-//                        exchange.getRequest().mutate().header("CUSTOM-REQUEST-HEADER", userName).build();
-//                        return exchange;
-//                    })
-//                    .flatMap(chain::filter);
-
         return (exchange, chain) -> {
             log.info(" ----- login pre filter ----- ");
             UserEntity userDTO = userService.get(1);
