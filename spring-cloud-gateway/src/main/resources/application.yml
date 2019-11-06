@@ -41,6 +41,11 @@ spring:
           uri: lb://cloud-user
           predicates:
             - Path=/api/users/tomcat_websocket/**
+          filters:
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback
 
 mybatis-plus:
   mapper-locations: classpath*:/mappers/*.xml
